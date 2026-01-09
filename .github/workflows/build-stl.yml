@@ -1,0 +1,58 @@
+name: Build STL Files
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-stl:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install OpenSCAD
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openscad
+        
+    - name: Verify OpenSCAD installation
+      run: openscad --version
+      
+    - name: Create output directory
+      run: mkdir -p stl_output
+      
+    - name: Compile bottom.scad to STL
+      run: openscad -o stl_output/bottom.stl bottom.scad
+      
+    - name: Compile lid-mid360.scad to STL
+      run: openscad -o stl_output/lid-mid360.stl lid-mid360.scad
+      
+    - name: Compile UC_261.scad to STL
+      run: openscad -o stl_output/UC_261.stl Cameras/UC_261.scad
+      
+    - name: Compile UC_A173.scad to STL
+      run: openscad -o stl_output/UC_A173.stl Cameras/UC_A173.scad
+      
+    - name: Compile UC_261_Mid360.scad to STL
+      run: openscad -o stl_output/UC_261_Mid360.stl Cameras/UC_261_Mid360.scad
+      
+    - name: Compile UC_A173_LidarCover.scad to STL
+      run: openscad -o stl_output/UC_A173_LidarCover.stl Cameras/UC_A173_LidarCover.scad
+      
+    - name: Compile Mid360Cover.scad to STL
+      run: openscad -o stl_output/Mid360Cover.stl LidarCover/Mid360Cover.scad
+      
+    - name: List generated STL files
+      run: ls -lh stl_output/
+      
+    - name: Upload STL files as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: stl-files
+        path: stl_output/*.stl
+        retention-days: 90
