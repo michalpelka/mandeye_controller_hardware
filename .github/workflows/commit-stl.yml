@@ -1,0 +1,80 @@
+name: Commit STL Files to Repository
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  commit-stl:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Install OpenSCAD
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openscad
+        
+    - name: Verify OpenSCAD installation
+      run: openscad --version
+      
+    - name: Create STL directory
+      run: mkdir -p stl
+      
+    - name: Compile SCAD files to STL
+      run: |
+        # Array of files to compile: "source_path:output_name"
+        files=(
+          "bottom.scad:bottom.stl"
+          "lid-mid360.scad:lid-mid360.stl"
+          "Cameras/UC_261.scad:UC_261.stl"
+          "Cameras/UC_A173.scad:UC_A173.stl"
+          "Cameras/UC_261_Mid360.scad:UC_261_Mid360.stl"
+          "Cameras/UC_A173_LidarCover.scad:UC_A173_LidarCover.stl"
+          "LidarCover/Mid360Cover.scad:Mid360Cover.stl"
+        )
+        
+        failed=0
+        for file_pair in "${files[@]}"; do
+          IFS=':' read -r source output <<< "$file_pair"
+          echo "Compiling $source to $output..."
+          openscad -o "stl/$output" "$source" 2>&1 | tee "stl/${output}.log"
+          # Check the exit status of openscad, not tee
+          if [ "${PIPESTATUS[0]}" -eq 0 ]; then
+            echo "✓ Successfully compiled $source"
+            # Remove the log file on success
+            rm -f "stl/${output}.log"
+          else
+            echo "✗ Failed to compile $source"
+            failed=$((failed + 1))
+          fi
+        done
+        
+        if [ $failed -gt 0 ]; then
+          echo "Error: $failed file(s) failed to compile"
+          exit 1
+        fi
+      
+    - name: List generated STL files
+      run: ls -lh stl/
+      
+    - name: Commit and push STL files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add stl/*.stl
+        
+        # Check if there are any changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update STL files [skip ci]"
+          git push
+        fi
