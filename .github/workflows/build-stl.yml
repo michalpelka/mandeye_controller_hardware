@@ -43,7 +43,9 @@ jobs:
         for file_pair in "${files[@]}"; do
           IFS=':' read -r source output <<< "$file_pair"
           echo "Compiling $source to $output..."
-          if openscad -o "stl_output/$output" "$source" 2>&1 | tee "stl_output/${output}.log"; then
+          openscad -o "stl_output/$output" "$source" 2>&1 | tee "stl_output/${output}.log"
+          # Check the exit status of openscad, not tee
+          if [ "${PIPESTATUS[0]}" -eq 0 ]; then
             echo "✓ Successfully compiled $source"
           else
             echo "✗ Failed to compile $source"
