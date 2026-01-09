@@ -1,0 +1,79 @@
+name: Build STL Files
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-stl:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install OpenSCAD
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openscad
+        
+    - name: Verify OpenSCAD installation
+      run: openscad --version
+      
+    - name: Create output directory
+      run: mkdir -p stl_output
+      
+    - name: Compile SCAD files to STL
+      run: |
+        # Array of files to compile: "source_path:output_name"
+        files=(
+          "bottom.scad:bottom.stl"
+          "lid-mid360.scad:lid-mid360.stl"
+          "Cameras/UC_261.scad:UC_261.stl"
+          "Cameras/UC_A173.scad:UC_A173.stl"
+          "Cameras/UC_261_Mid360.scad:UC_261_Mid360.stl"
+          "Cameras/UC_A173_LidarCover.scad:UC_A173_LidarCover.stl"
+          "LidarCover/Mid360Cover.scad:Mid360Cover.stl"
+        )
+        
+        failed=0
+        for file_pair in "${files[@]}"; do
+          IFS=':' read -r source output <<< "$file_pair"
+          echo "Compiling $source to $output..."
+          openscad -o "stl_output/$output" "$source" 2>&1 | tee "stl_output/${output}.log"
+          # Check the exit status of openscad, not tee
+          if [ "${PIPESTATUS[0]}" -eq 0 ]; then
+            echo "✓ Successfully compiled $source"
+          else
+            echo "✗ Failed to compile $source"
+            failed=$((failed + 1))
+          fi
+        done
+        
+        if [ $failed -gt 0 ]; then
+          echo "Error: $failed file(s) failed to compile"
+          exit 1
+        fi
+      
+    - name: List generated STL files
+      run: ls -lh stl_output/
+      
+    - name: Upload STL files as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: stl-files
+        path: stl_output/*.stl
+        retention-days: 90
+        
+    - name: Upload compilation logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: compilation-logs
+        path: stl_output/*.log
+        retention-days: 30
