@@ -15,15 +15,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Cache OpenSCAD installation
-      uses: actions/cache@v4
-      id: cache-openscad
-      with:
-        path: /usr/bin/openscad
-        key: ${{ runner.os }}-openscad-2021.01
-      
     - name: Install OpenSCAD
-      if: steps.cache-openscad.outputs.cache-hit != 'true'
       run: |
         sudo apt-get update
         sudo apt-get install -y openscad
