@@ -1,0 +1,49 @@
+# Main SCAD Files for Compilation
+
+This file lists all the main OpenSCAD files in this repository that should be compiled to STL format.
+
+## Compilation List
+
+The following SCAD files are automatically compiled by the CI workflow:
+
+### Base Components
+- `bottom.scad` - Bottom enclosure component
+- `lid-mid360.scad` - Lid for Mid-360 LiDAR configuration
+
+### Camera Mounts (Cameras/)
+- `Cameras/UC_261.scad` - UC-261 camera mount
+- `Cameras/UC_A173.scad` - UC-A173 camera mount  
+- `Cameras/UC_261_Mid360.scad` - UC-261 camera mount with Mid-360 cover
+- `Cameras/UC_A173_LidarCover.scad` - UC-A173 camera mount with LiDAR cover
+
+### LiDAR Covers (LidarCover/)
+- `LidarCover/Mid360Cover.scad` - Mid-360 LiDAR protective cover
+
+## Module/Library Files (Not Standalone)
+
+The following files are modules/libraries and should NOT be compiled individually:
+- `constants.scad` - Shared constants and dimensions
+- `Cameras/CameraMount.scad` - Camera mount module library
+- `raspberry/rpi5_negative.scad` - Raspberry Pi 5 mounting module
+- `system_mid360.scad` - Assembly/visualization file (contains multiple components)
+
+## CI/CD Workflow
+
+All main SCAD files listed above are automatically compiled to STL on:
+- Push to `main` or `master` branch
+- Pull requests to `main` or `master` branch
+- Manual workflow dispatch
+
+The compiled STL files are available as downloadable artifacts from the GitHub Actions workflow runs.
+
+## Local Compilation
+
+To compile a specific file locally:
+```bash
+openscad -o output.stl input.scad
+```
+
+Example:
+```bash
+openscad -o bottom.stl bottom.scad
+```
