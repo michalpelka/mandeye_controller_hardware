@@ -39,6 +39,7 @@ jobs:
           "Cameras/UC_261_Mid360.scad:UC_261_Mid360.stl"
           "Cameras/UC_A173_LidarCover.scad:UC_A173_LidarCover.stl"
           "LidarCover/Mid360Cover.scad:Mid360Cover.stl"
+          "raspberry_pi_spacer.scad:raspberry_pi_spacer.stl"
         )
         
         failed=0
