@@ -5,7 +5,7 @@ rpi_pcb_w = 56;
 rpi_pcb_h = 85;
 rpi_pcb_h2 = 65;
 
-module raspberyPiWithReses()
+module raspberryPiWithrecesses()
 {
     translate([-rpi_pcb_w/2,0,0])
     union()
@@ -13,8 +13,8 @@ module raspberyPiWithReses()
         // Board
         color("gray", 0.5) cube([rpi_pcb_w, rpi_pcb_h, 20]);
         
-        // reses for GPIOS / 
-        // reses for the ports (USBs and Eternet)
+        // recesses for GPIOS / 
+        // recesses for the ports (USBs and Eternet)
         color("red", 0.4) {
             translate([2,2,20])
             minkowski(){
@@ -22,7 +22,7 @@ module raspberyPiWithReses()
                 sphere(2);
             }
         }
-       // reses for Hat
+       // recesses for Hat
         color("red", 0.1) {
             translate([0,rpi_pcb_h,0])
             minkowski(){
@@ -31,16 +31,16 @@ module raspberyPiWithReses()
         }
 
         
-        // reses for the 2x HDMIs and USB-C 
+        // recesses for the 2x HDMIs and USB-C 
         color("red", 0.4) 
         {
-            translate([4,4,4])
+            translate([4,4,1.1])
                 minkowski(){
                     cube ([100, 58, 6]) ;
                     sphere(4);
                 }
         }
-        // reses for the SD
+        // recesses for the SD
         color("red",0.1) 
         {
             translate([rpi_pcb_w/2,-10,1])
@@ -54,7 +54,7 @@ module raspberyPiWithReses()
 }
 
 
-module raspberyPiPocket(margin = 4)
+module raspberryPiPocket(margin = 4)
 {
     translate([-rpi_pcb_w/2,0,0])
     union()
@@ -63,11 +63,10 @@ module raspberyPiPocket(margin = 4)
         color("gray", 1) cube([rpi_pcb_w, rpi_pcb_h, 20]);
         color("red", 0.4)
         {
-            translate([0,-100,0]);
+            translate([0,-100,0])
             minkowski()
             {
-                    
-                cube([rpi_pcb_w, 400, 400]);
+                cube([rpi_pcb_w, 300, 20]);
                 sphere(margin);
             }
             
@@ -76,7 +75,7 @@ module raspberyPiPocket(margin = 4)
     }
 }
 
-module raspberyPiHoles(d=3, h=8)
+module raspberryPiHoles(d=3, h=8)
 {
     sx = 3.5;
     sy = 3.5;
@@ -96,7 +95,27 @@ module raspberyPiHoles(d=3, h=8)
             cylinder(h, d=d, center=true, $fn=16);
     }
 }
-
-//raspberyPiWithReses();
-raspberyPiPocket();
-raspberyPiHoles();
+module raspberryPiProtection()
+{
+    h1=0.75;
+    ht=3;
+    difference()
+    {
+        union()
+        {
+            hull()
+            {
+                translate([0,0,h1])
+                raspberryPiHoles(d=5, h=h1);
+            }
+            translate([0,0,ht])
+                raspberryPiHoles(d=5, h=ht);
+        }
+        translate([0,0,ht+0.1])
+            raspberryPiHoles(d=3, h=ht*2);
+    }
+}
+raspberryPiProtection();
+raspberryPiWithrecesses();
+raspberryPiPocket();
+//raspberryPiHoles();
