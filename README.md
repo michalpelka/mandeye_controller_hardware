@@ -1,3 +1,6 @@
+
+[![Build STL Files](https://github.com/michalpelka/mandeye_controller_hardware/actions/workflows/build-stl.yml/badge.svg)](https://github.com/michalpelka/mandeye_controller_hardware/actions/workflows/build-stl.yml)
+
 # Mandeye Controller Hardware
 
 This repository contains OpenSCAD design files for the Mandeye Controller Hardware.
