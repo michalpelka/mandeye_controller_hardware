@@ -99,23 +99,26 @@ module raspberryPiProtection()
 {
     h1=0.75;
     ht=3;
+
     difference()
     {
         union()
         {
             hull()
             {
-                translate([0,0,h1])
-                raspberryPiHoles(d=5, h=h1);
+                translate([0,rpi_pcb_h/2,0])
+                    cube([rpi_pcb_w,rpi_pcb_h,h1], center=true);
+            
             }
             translate([0,0,ht])
                 raspberryPiHoles(d=5, h=ht);
+            
         }
         translate([0,0,ht+0.1])
             raspberryPiHoles(d=3, h=ht*2);
     }
 }
 raspberryPiProtection();
-raspberryPiWithrecesses();
-raspberryPiPocket();
+//raspberryPiWithrecesses();
+//raspberryPiPocket();
 //raspberryPiHoles();

@@ -15,11 +15,7 @@ holes_D = dimensions_D - 10;
 
 // raspberry pi dims:
 // https://pip-assets.raspberrypi.com/categories/892-raspberry-pi-5/documents/RP-008347-DS-1-raspberry-pi-5-mechanical-drawing.pdf
-raspberry_pi_W = 56+5;
-raspberry_pi_H = 30;
-raspberry_pi_holes_X = 49;
-raspberry_pi_holes_Y = 58;
-raspberry_pi_holes_D = 3;
+
 
 
 module circular_holes(D, d, h=10) {
