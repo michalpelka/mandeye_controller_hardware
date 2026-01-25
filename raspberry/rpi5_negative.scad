@@ -46,7 +46,7 @@ module raspberryPiWithrecesses()
             translate([rpi_pcb_w/2,-10,1])
             minkowski(){
                     cube([15, 20,5], true);
-                    sphere(4);
+                    sphere(10, $fn=16);
                 }
        
         }
@@ -75,7 +75,7 @@ module raspberryPiPocket(margin = 4)
     }
 }
 
-module raspberryPiHoles(d=3, h=8)
+module raspberryPiHoles(d=3, h=8,$fn=16)
 {
     sx = 3.5;
     sy = 3.5;
@@ -86,15 +86,16 @@ module raspberryPiHoles(d=3, h=8)
     union()
     {
         translate([sx,sy,-h/2])
-            cylinder(h, d=d, center=true, $fn=16);
+            cylinder(h, d=d, center=true);
         translate([sx+x,sy,-h/2])
-            cylinder(h, d=d, center=true, $fn=16);
+            cylinder(h, d=d, center=true);
         translate([sx,sy+y,-h/2])
-            cylinder(h, d=d, center=true, $fn=16);
+            cylinder(h, d=d, center=true);
         translate([sx+x,sy+y,-h/2])
-            cylinder(h, d=d, center=true, $fn=16);
+            cylinder(h, d=d, center=true);
     }
 }
+
 module raspberryPiProtection()
 {
     h1=0.75;
@@ -118,7 +119,8 @@ module raspberryPiProtection()
             raspberryPiHoles(d=3, h=ht*2);
     }
 }
-raspberryPiProtection();
+//raspberryPiProtection();
 //raspberryPiWithrecesses();
 //raspberryPiPocket();
-//raspberryPiHoles();
+raspberryPiHoles();
+

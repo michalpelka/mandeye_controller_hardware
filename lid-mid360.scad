@@ -42,6 +42,10 @@ module LidMid360()
         // mount for muRata
         translate([0,0,-3])
             muRataDevBoadHoles(4);
+                // mount for muRata
+        rotate([0,0,90])
+        translate([0,0,-3])
+            muRataDevBoadHoles(4);
     }
 }
 LidMid360();
