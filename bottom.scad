@@ -1,6 +1,16 @@
 include <constants.scad>
 use <raspberry/rpi5_negative.scad>
 dimensions_H = 50;
+
+module IdentHole()
+{
+    hull($fn=16){
+        translate([-1.5,0,0])
+            cylinder(h=2,d=3);
+        translate([1.5,0,0])
+            cylinder(h=2,d=3);
+    }
+}
 module Bottom()
 {
     difference() {
@@ -48,17 +58,10 @@ module Bottom()
         
         // ident holes
         translate([-8,0,-0.1])
-        {
-            hull($fn=16){
-                translate([-1.5,0,0])
-                    cylinder(h=2,d=3);
-                translate([1.5,0,0])
-                    cylinder(h=2,d=3);
-            }
-        }
+            IdentHole();
+        translate([8,0,-0.1])
+            IdentHole();
     }
 }
     
-  
 Bottom();
-
