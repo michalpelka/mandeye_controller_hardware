@@ -36,7 +36,7 @@ module Bottom()
                 raspberryPiPocket(3);
                 raspberryPiWithrecesses();
                 raspberryPiHoles(d=3.0, h=UNC_Insert_H+.1, $fn=32);
-                raspberryPiHoles(d=6.1, h=6, $fn=6);
+                raspberryPiHoles(d=6.3, h=6, $fn=6);
             }
             translate([0,0,4])
                 raspberryPiHoles(d=5.5, h=10, $fn=32);
