@@ -5,7 +5,7 @@ rpi_pcb_w = 56;
 rpi_pcb_h = 85;
 rpi_pcb_h2 = 65;
 
-module raspberryPiWithrecesses()
+module raspberryPiWithrecesses(margin_hat=5.5, margin_side=4)
 {
     translate([-rpi_pcb_w/2,0,0])
     union()
@@ -13,20 +13,20 @@ module raspberryPiWithrecesses()
         // Board
         color("gray", 0.5) cube([rpi_pcb_w, rpi_pcb_h, 20]);
         
-        // recesses for GPIOS / 
-        // recesses for the ports (USBs and Eternet)
+        // recesses for GPIOS / hat
         color("red", 0.4) {
             translate([2,2,20])
             minkowski(){
                 cube([rpi_pcb_w-4, rpi_pcb_h-20, 50]);
-                sphere(2);
+                sphere(margin_hat);
             }
         }
-       // recesses for Hat
-        color("red", 0.1) {
+      // recesses for the ports (USBs and Eternet)
+        color("yellow", 0.1) {
             translate([0,rpi_pcb_h,0])
             minkowski(){
                 cube([rpi_pcb_w, 100, 20]);
+                
             }
         }
 
@@ -37,7 +37,7 @@ module raspberryPiWithrecesses()
             translate([4,4,1.1])
                 minkowski(){
                     cube ([100, 58, 6]) ;
-                    sphere(4);
+                    sphere(margin_side);
                 }
         }
         // recesses for the SD
@@ -120,7 +120,7 @@ module raspberryPiProtection()
     }
 }
 //raspberryPiProtection();
-//raspberryPiWithrecesses();
-//raspberryPiPocket();
+raspberryPiWithrecesses();
+raspberryPiPocket();
 raspberryPiHoles();
 
