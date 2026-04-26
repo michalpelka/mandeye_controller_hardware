@@ -35,7 +35,6 @@ module Camera(
     camera_dim_height,
     camera_hole_dim,
     mount_hegiht,
-    ribbon
 )
 {
     difference() {        
@@ -58,10 +57,6 @@ module Camera(
             rotate([90,0,0])
                 cylinder(h = 15, d = M3_Insert_D, $fn=20);
         
-        // cutout for ribbon
-        translate([0,0,0])
-            rotate([90,0,0])
-                cube([ribbon, 2, camera_dim_height], center=true); 
 //        
     }
 }

@@ -7,7 +7,7 @@ M3_Insert_D = 4.1;
 M3_Insert_H = 4.1;
 
 // model settings
-dimensions_H = 45;
+dimensions_H = 60;
 dimensions_D = 110;
 mount_holes_angles = [-35,0, 35, 180-35, 180, 180+35];
 lip_dimension_D = dimensions_D - 20;

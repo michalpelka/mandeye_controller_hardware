@@ -3,6 +3,9 @@ UC_261_camera_hole_height = 25.8+3.1;
 
 use <../LidarCover/Mid360Cover.scad>
 
+// - use 4x DIN912 M3x14 to mount to base
+// - use 4x M3x5 heatinsert for camera holes
+// - use 4x DIN 7985 Mx8 for camera + spacers (misc/distance.scad)
 module UC_261_Mid360_Cover()
 {
     difference()

@@ -1,7 +1,11 @@
 include <constants.scad>
 use <raspberry/rpi5_negative.scad>
-dimensions_H = 50;
+use <oled/ssd13.scad>
 
+// - use 4x cnc-kitchen 1/4"-20-x12.7 for UNC holes
+// - use 6x cnc-kitchen M3x5.7 for top mounting holes
+// - use 8x DIN 7985 M2.5x6 for RaspberryPi
+// - use 4x M2.5x10 threaded spacer e.g. 142X10DREMEC
 module IdentHole()
 {
     hull($fn=16){
@@ -50,7 +54,7 @@ module Bottom()
             cylinder(h=2, d= lip_dimension_D, $fn=128);
         
         // recesses for screw heads
-        translate([0,0,dimensions_H-2+0.01])
+        translate([0,0,dimensions_H-2+0.1])
         minkowski(){
             cube([30, lip_dimension_D-2,3], true);
             sphere(1);
@@ -61,7 +65,13 @@ module Bottom()
             IdentHole();
         translate([8,0,-0.1])
             IdentHole();
+        
+        // oled screen
+        translate([-42,0,30])
+            rotate([90,0,-90])
+                SSD13();
     }
+
 }
     
 Bottom();
