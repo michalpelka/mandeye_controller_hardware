@@ -35,7 +35,7 @@ module Bottom()
         // raspberry pi
         translate([0,-41,0])
         {
-            translate([0,0,UNC_Insert_H-0.1])
+                translate([0,0,UNC_Insert_H-0.1+4])
             {
                 raspberryPiPocket(3);
                 raspberryPiWithrecesses();
@@ -67,9 +67,18 @@ module Bottom()
             IdentHole();
         
         // oled screen
-        translate([-42,0,30])
-            rotate([90,0,-90])
-                SSD13();
+        rotate([0,0,160])
+            translate([dimensions_D/2-8,0,30])
+                rotate([90,0,90])
+                    SSD13();
+        // Button
+        rotate([0,0,200])
+            translate([dimensions_D/2,0,30])
+                rotate([90,0,90])
+                    Button();
+        translate([0,0,UNC_Insert_H+1])
+            // remove material
+            cylinder(h=50,d=lip_dimension_D-2, $fn=128);
     }
 
 }
