@@ -7,7 +7,7 @@ M3_Insert_D = 4.1;
 M3_Insert_H = 4.1;
 
 // model settings
-dimensions_H = 45;
+dimensions_H = 60;
 dimensions_D = 110;
 mount_holes_angles = [-35,0, 35, 180-35, 180, 180+35];
 lip_dimension_D = dimensions_D - 20;
@@ -15,11 +15,7 @@ holes_D = dimensions_D - 10;
 
 // raspberry pi dims:
 // https://pip-assets.raspberrypi.com/categories/892-raspberry-pi-5/documents/RP-008347-DS-1-raspberry-pi-5-mechanical-drawing.pdf
-raspberry_pi_W = 56+5;
-raspberry_pi_H = 30;
-raspberry_pi_holes_X = 49;
-raspberry_pi_holes_Y = 58;
-raspberry_pi_holes_D = 3;
+
 
 
 module circular_holes(D, d, h=10) {

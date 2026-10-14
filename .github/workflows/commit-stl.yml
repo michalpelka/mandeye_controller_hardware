@@ -34,10 +34,9 @@ jobs:
         files=(
           "bottom.scad:bottom.stl"
           "lid-mid360.scad:lid-mid360.stl"
-          "Cameras/UC_261.scad:UC_261.stl"
+          "lid-hesai-jt128.scad:lid-hesai-jt128.stl"
           "Cameras/UC_A173.scad:UC_A173.stl"
           "Cameras/UC_261_Mid360.scad:UC_261_Mid360.stl"
-          "Cameras/UC_A173_LidarCover.scad:UC_A173_LidarCover.stl"
           "LidarCover/Mid360Cover.scad:Mid360Cover.stl"
           "raspberry_pi_spacer.scad:raspberry_pi_spacer.stl"
         )
